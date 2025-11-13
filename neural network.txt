@@ -1,0 +1,56 @@
+1. import pandas as pd
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import seaborn as sns
+
+2. df=pd.read_csv('Churn_Modelling.csv')
+   df
+
+3. df=df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+4. df.isna().sum()
+5. df.dtypes
+
+6. from sklearn.preprocessing import LabelEncoder
+   label=LabelEncoder()
+
+7. df['Geography']=label.fit_transform(df['Geography'])
+   df['Gender']=label.fit_transform(df['Gender'])
+
+8. from sklearn.preprocessing import StandardScaler
+   scalar= StandardScaler()
+
+9. df['Balance']=scaler.fit_transform(df[['Balance']]).round(2)
+   df['Age']=scaler.fit_transform(df[['Age']]).round(2)
+
+10. df['CreditScore']=scaler.fit_transform(df[['CreditScore']]).round(2)
+    df['EstimatedSalary']=scaler.fit_transform(df[['EstimatedSalary']]).round(2)
+    df
+
+11.x=df.drop('Exited',axis=1)
+   y=df['Exited']
+
+12. from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_sate=42)
+
+13. from tensorflow.keras.models import Sequential
+    from tensorflow.keras.models import Dense
+   
+    model =Sequential()
+    model.add(Dense(32, input_dim=X_tain.shape[1], activation='relu'))
+    model.add(Dense(16, activation='relu'))
+    model.add(Dense(16, activation='sigmoid'))
+    mode.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+    history = model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2)
+
+14. loss, accuracy = model.evaluate(X_test, y_test)
+    print("Test Accuracy:", accuracy)
+    y_pred_prob = model.evaluate(X_test, y_test)
+    y_pred = (y_pred_prob > 0.5).astype(int)
+
+15.from sklearn.metrics import confusion_matrix, classification_report
+   print(confusion_matrix(y_test,y_pred))
+   print(classification_report(y_test,y_pred))
+
+ 
